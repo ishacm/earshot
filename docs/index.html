@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>earshot: Paste a website. Hear what its customers actually say.</title><meta name="description" content="Earshot reads public reviews and discussions about a product and its competitors, finds the pains people repeat, and turns them into messaging. Every quote is checked word for word against its source.">
+<meta property="og:title" content="earshot: Paste a website. Hear what its customers actually say."><meta property="og:description" content="Earshot reads public reviews and discussions about a product and its competitors, finds the pains people repeat, and turns them into messaging. Every quote is checked word for word against its source.">
+<link rel="preload" as="image" href="listen.webp"><style>:root{--bg:#f6f2ea;--ink:#1b1a18;--soft:#3d3b37;--muted:#6b675f;--line:#ddd6c8;--card:#fffdf8;--accent:#b04e1a;--code:#efe9dd}
+@media (prefers-color-scheme:dark){:root{--bg:#0c0d0e;--ink:#ece7dd;--soft:#c8c2b7;--muted:#9c978e;--line:#2a2d30;--card:#141618;--accent:#f08a4b;--code:#181a1c}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent);text-underline-offset:3px}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+header{display:flex;align-items:center;gap:12px;padding:22px 0}
+header b{font-weight:600}header nav{margin-left:auto;display:flex;gap:18px;font-size:15px}header nav a{color:var(--soft);text-decoration:none}
+.k{font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}
+h1{font-size:clamp(30px,5.4vw,48px);line-height:1.1;letter-spacing:-.025em;font-weight:600;margin:28px 0 14px;max-width:760px}
+.sub{font-size:clamp(17px,2vw,19px);color:var(--soft);max-width:640px;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 34px}
+.btn{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--line);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){.btn.primary{color:#1a0d05}}
+figure{margin:0 0 10px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0c0d0e}
+figure img{display:block;width:100%;height:auto}
+section{padding:40px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(22px,3vw,28px);letter-spacing:-.015em;font-weight:600;margin:6px 0 16px}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:38px 1fr;gap:6px;padding:12px 0;border-bottom:1px solid var(--line)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font:13px/2 ui-monospace,Menlo,monospace;color:var(--accent)}
+ol.steps b{display:block}ol.steps span{color:var(--soft)}
+ul.gets{padding-left:20px;margin:0}ul.gets li{margin:0 0 8px;color:var(--soft)}
+.note{border-left:3px solid var(--accent);padding:2px 0 2px 14px;color:var(--soft);margin:18px 0 0}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow-x:auto;font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0;position:relative}
+.copy{position:absolute;top:10px;right:10px;font:12px ui-monospace,monospace;background:var(--card);color:var(--soft);border:1px solid var(--line);border-radius:6px;padding:4px 8px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:15px}td,th{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:500}
+footer{padding:36px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}</style></head><body>
+<div class="wrap">
+<header><a href="https://github.com/ishacm" style="display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><rect x="9" y="4" width="3" height="3" fill="#F08A4B"/><rect x="12" y="4" width="3" height="3" fill="#F08A4B"/><rect x="15" y="5" width="3" height="3" fill="#F08A4B"/><rect x="9" y="7" width="3" height="3" fill="currentColor" opacity=".8"/><rect x="12" y="7" width="3" height="3" fill="currentColor" opacity=".8"/><rect x="5" y="2" width="3" height="3" fill="currentColor" opacity=".5"/><rect x="5" y="9" width="3" height="3" fill="currentColor" opacity=".5"/><rect x="1" y="0" width="3" height="3" fill="currentColor" opacity=".35"/><rect x="1" y="11" width="3" height="3" fill="currentColor" opacity=".35"/></svg><b>earshot</b></a>
+<nav><a href="demo/report.html">demo report</a><a href="https://github.com/ishacm/earshot">GitHub</a></nav></header>
+<p class="k">open source · product marketing · runs at €0</p>
+<h1>Paste a website. Hear what its customers actually say.</h1>
+<p class="sub">Earshot reads public reviews and discussions about a product and its competitors, finds the pains people repeat, and turns them into messaging. Every quote is checked word for word against its source.</p>
+<div class="cta"><a class="btn primary" href="demo/report.html">See a demo report →</a><a class="btn" href="https://github.com/ishacm/earshot">View the code</a></div>
+<figure><img src="listen.webp" width="760" height="340" alt="Comments from Hacker News, the App Store and Reddit fly into an ear; a paraphrased quote is rejected; a messaging card comes out" fetchpriority="high"></figure>
+<p class="k">quotes go in, messaging comes out. anything not said word for word gets dropped.</p>
+<section><p class="k">how it works</p><h2>Five steps, about a minute</h2><ol class="steps"><li><div><b>Read the website</b><span>It works out what the company does, the category, the claims it makes and its likely competitors. You confirm the competitors.</span></div></li><li><div><b>Collect what people say</b><span>Public comments from Hacker News, App Store reviews, Reddit (with your own key) and any CSV you export, like G2 reviews or support tickets.</span></div></li><li><div><b>Tag every mention</b><span>Pains, jobs to be done, objections, praise, reasons to switch. Each tag keeps an exact quote; paraphrases are thrown out.</span></div></li><li><div><b>Count, then write</b><span>Themes are counted in code. The AI then writes messaging using only numbered evidence, and anything uncited is removed.</span></div></li><li><div><b>Share the report</b><span>A clean web page and a Markdown file, plus an optional Slack summary every Monday through n8n.</span></div></li></ol></section>
+<section><p class="k">what you get</p><h2>A messaging brief you can defend</h2><ul class="gets"><li>Positioning, three headline options and three message pillars, each linked to real quotes</li><li>The top pains, jobs to be done and objections, counted by how many people mention them</li><li>A battlecard per competitor: where they win and where they lose</li><li>The message-market gap: what the website promises that nobody talks about, and what customers raise that the website ignores</li></ul><p class="note">The demo uses a fictional company called Ledgerly and made-up comments, so it shows the format, not real findings.</p></section>
+<section><p class="k">try it in 60 seconds</p><h2>No account, no API key, no cost</h2>
+<pre><button class="copy" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(this.parentNode.innerText.replace(/^copy\n?/,''));this.textContent='copied'">copy</button>git clone https://github.com/ishacm/earshot &amp;&amp; cd earshot
+pip install -r requirements.txt
+EARSHOT_LLM=mock python -m earshot.run --demo</pre>
+<p class="sub" style="font-size:16px;margin-top:14px">Then open the report it prints. To run it on a real company, add a free Groq key: <a href="https://github.com/ishacm/earshot#readme">see the README</a>.</p></section>
+<section><p class="k">what it costs</p><h2>€0, on purpose</h2><table><tbody><tr><td>AI</td><td>Groq free tier. Paid models are blocked unless you switch them on on purpose.</td></tr><tr><td>Sources</td><td>Hacker News, App Store and Reddit official APIs, plus your own CSV files</td></tr><tr><td>Automation</td><td>n8n Community Edition, self-hosted</td></tr></tbody></table></section>
+<footer>Built by <a href="https://www.linkedin.com/in/ishachaudhari/">Isha Chaudhari</a> · MIT licensed · one of three small open GTM tools: <a href="https://github.com/ishacm/kompass">Kompass</a>, <a href="https://ishacm.github.io/earshot/">Earshot</a>, <a href="https://ishacm.github.io/crm-tidy/">crm-tidy</a></footer>
+</div></body></html>
