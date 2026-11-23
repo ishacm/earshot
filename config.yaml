@@ -1,0 +1,39 @@
+llm:
+  # "groq" = free mode. Override per run: EARSHOT_PROVIDER=...  Mock mode for tests/demo: EARSHOT_LLM=mock
+  provider: groq
+  providers:
+    groq:
+      kind: openai_compatible
+      base_url: "https://api.groq.com/openai/v1"
+      key_env: GROQ_API_KEY
+      model: openai/gpt-oss-120b
+      extra: {reasoning_effort: low}
+      min_max_tokens: 2048
+    anthropic:
+      kind: anthropic
+      paid: true
+      key_env: ANTHROPIC_API_KEY
+      model: claude-sonnet-5-5
+    ollama:
+      kind: openai_compatible
+      base_url: "http://localhost:11434/v1"
+      key_env: null
+      model: null
+
+collect:
+  max_per_source: 60          # per query
+  max_mentions: 240           # hard cap per run, keeps free-tier usage small
+  min_chars: 60               # ignore one-liners
+  hn: {enabled: true, tags: comment}
+  appstore: {enabled: true, country: us, pages: 2}
+  reddit: {enabled: true}     # used only when REDDIT_CLIENT_ID/SECRET are set
+  cache_hours: 24
+
+tag:
+  batch_size: 12
+  types: [pain, job, objection, praise, switch_trigger, feature_request]
+
+synthesize:
+  min_mentions_for_theme: 3   # below this, a theme is shown as "weak signal"
+  top_themes: 8
+  quotes_per_theme: 3

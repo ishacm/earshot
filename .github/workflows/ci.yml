@@ -1,0 +1,19 @@
+name: tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt pytest
+      - name: Secret check
+        run: python scripts/check_secrets.py --all
+      - name: Tests (mock mode, no keys, no network)
+        run: EARSHOT_LLM=mock pytest -q
+      - name: Demo run
+        run: EARSHOT_LLM=mock python -m earshot.run --demo

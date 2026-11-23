@@ -1,0 +1,17 @@
+__pycache__/
+.pytest_cache/
+.cache/
+runs/
+!runs/.gitkeep
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+credentials.json
+
+# your own data: never commit
+/exports/
+/icp.yaml
+/data/
