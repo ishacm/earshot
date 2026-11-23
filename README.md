@@ -4,120 +4,113 @@
 ![cost](https://img.shields.io/badge/runs%20at-%E2%82%AC0-22c55e)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 
-**Paste a company's website. Get back what its customers (and its competitors' customers) actually say: the top pains, jobs to be done, objections and reasons people switch, plus messaging and battlecards built only from real quotes.**
+**Paste a website. Hear what its customers actually say.**
 
-*Every quote is checked word for word against its source. Anything the model can't back up gets dropped.*
+Earshot reads public reviews and discussions about a product and its competitors, finds the pains people keep repeating, and turns them into messaging. Every quote is checked word for word against its source, so nothing is made up.
+
+<p align="center"><img src="docs/listen.gif" width="700" alt="Comments fly into an ear; a paraphrased quote is rejected; a messaging card comes out"></p>
+
+**👉 [See it in action](https://ishacm.github.io/earshot/)** · **[Open the demo report](https://ishacm.github.io/earshot/demo/report.html)**
 
 ---
 
-## Why this exists
+## What it does, in plain words
 
-Most messaging is written from the inside out: what the team thinks is special. Customers talk about something else, in different words, in public, every day. Earshot listens there first, then writes the messaging.
-
-It's built for product marketers, founders and GTM teams at any startup. Works for B2B SaaS, dev tools, consumer apps, anything people talk about online.
+1. **You give it a website.** It works out what the company sells and who its competitors are.
+2. **It listens.** It collects what real people say in public about the product, its competitors and the problem they solve.
+3. **It tells you what matters.** Which pains come up again and again, what makes people hesitate, why they switch, and how to say all of that in your messaging.
 
 ## What you get
 
-One report (Markdown + a shareable HTML page) with:
+- **Messaging:** a positioning line, three headline options and three message pillars, each linked to real quotes.
+- **What people struggle with:** top pains, jobs to be done and objections, counted by how many people mention them.
+- **Battlecards:** for each competitor, where they win and where they lose.
+- **The gap:** what your website promises that nobody talks about, and what customers care about that your website never mentions.
 
-| Section | What's in it |
-|---|---|
-| **Messaging** | Positioning statement, 3 headline options, 3 pillars, each tied to a pain and to the quotes that prove it |
-| **Objections** | What makes people hesitate, and an answer grounded in what customers said |
-| **Battlecards** | Per competitor: where they win, where they lose, with evidence |
-| **Message-market gap** | What your website claims that nobody mentions, and what customers raise that your website ignores |
-| **Themes** | Every pain, job, objection, praise, switching trigger and feature request, counted by mentions, with weak signals marked |
-| **Evidence** | Every quote, linked to its source and date |
-
-## How it works
-
-```
-website ──► profile ──► collect ──► tag ──► synthesize ──► report
-            category,    HN, App     pains,   counts in code,   Markdown,
-            claims,      Store,      jobs,    messaging by      HTML,
-            competitors  Reddit,     quotes   the model, only   Slack
-            (you confirm) your CSV   (verified) from evidence
-```
-
-1. **Profile** reads the homepage: what it does, the category, the claims it makes, and a first guess at competitors. You can confirm or override the competitors.
-2. **Collect** pulls public mentions of the product, each competitor and the category from free, official sources, then removes usernames, emails and phone numbers.
-3. **Tag** labels each mention with pains, jobs, objections, praise, switching triggers and feature requests. Every quote must be an exact substring of the original text, or it's rejected and counted.
-4. **Synthesize** counts themes in code (so numbers are reproducible), then asks the model to write messaging using numbered evidence only. Anything that cites no valid evidence is dropped.
-5. **Report** writes Markdown and HTML, and can post a summary to Slack.
+It works for any startup people talk about online: SaaS, dev tools, consumer apps.
 
 ## Try it in 60 seconds
 
-No API key, no account, no network:
+No account, no API key, no cost:
 
 ```bash
 git clone https://github.com/ishacm/earshot && cd earshot
-pip install -r requirements.txt pytest
-EARSHOT_LLM=mock python -m earshot.run --demo    # a fictional company, "Ledgerly"
-EARSHOT_LLM=mock pytest -q                       # 21 tests
+pip install -r requirements.txt
+EARSHOT_LLM=mock python -m earshot.run --demo
 ```
 
-Then open `runs/<date>-ledgerly/report.html`.
+Then open the `report.html` it prints. The demo uses a fictional company, *Ledgerly*, and made-up comments, so it shows the format, not real findings.
 
-> The demo uses a fictional company and synthetic mentions, and mock mode swaps the AI for simple rules. It shows the format and proves the plumbing. It is not a finding about any real product.
-
-## Run it for real (still €0)
+## Use it on a real company
 
 ```bash
-cp .env.example .env          # add a free Groq key from console.groq.com (never committed)
-python -m earshot.run --url https://your-company.com --competitors "Rival A, Rival B"
-python -m earshot.run --url https://your-company.com --csv my_g2_export.csv   # add your own reviews
+cp .env.example .env        # paste a free Groq key from console.groq.com
+python -m earshot.run --url https://some-company.com --competitors "Rival A, Rival B"
 ```
 
-| Source | Cost | Notes |
-|---|---|---|
-| Hacker News | free | Public Algolia API, no key |
-| Apple App Store reviews | free | Public iTunes feed, only for products with an iOS app |
-| Reddit | free | Official API, only if you add your own `REDDIT_CLIENT_ID/SECRET` |
-| Your CSV | free | Any export with a text column: G2, support tickets, NPS comments, sales call notes |
-| AI | free | Groq free tier by default. Paid providers are refused unless `EARSHOT_ALLOW_PAID=true` |
-
-Earshot only uses official APIs and files you provide. It does not scrape sites whose terms forbid it.
-
-## Automate it with n8n
-
-Self-hosted n8n (the free Community Edition) can run Earshot on demand or every Monday and post the summary to Slack:
-
-```bash
-uvicorn earshot.serve:app --port 8090                                   # n8n on the same machine
-EARSHOT_API_TOKEN=pick-a-long-random-string \
-  uvicorn earshot.serve:app --host 0.0.0.0 --port 8090                  # n8n in Docker: always set a token
-```
-
-Import [`n8n/earshot.workflow.json`](n8n/earshot.workflow.json) into n8n. It has two triggers:
-
-- **Webhook:** `POST /webhook/earshot {"url": "https://...", "competitors": "A, B"}` runs it for any company, for example from a form or a Slack command.
-- **Every Monday 07:00:** re-runs for the company you set, so you can watch themes change over time.
-
-Paste your token into the `X-Api-Token` header of the *Run Earshot* node, and your Slack incoming-webhook URL into the last node (or delete it).
-
-## Safety rails 🛡️
-
-- **Quotes are verbatim or gone.** The report shows how many quotes were rejected and how many uncited claims were dropped.
-- **Counts are honest.** They are mentions in this sample, not market share, and themes with fewer than 3 mentions are marked weak.
-- **People are not the point.** Usernames, emails and phone numbers are stripped before anything is stored.
-- **No secrets in code.** Keys live in `.env` (git-ignored), and CI fails if anything key-shaped is committed.
-- **No surprise bills.** Paid AI providers are blocked unless explicitly allowed.
-
-## Before quoting any number
-
-Everything in this repo runs on a fictional demo company, so nothing here is a finding yet. On real data, check the tagging by hand on a sample of 30 mentions before you trust the themes, and always quote counts as "mentions in this sample", with the date and sources. The report prints both for you.
-
-## Repo map
-
-```
-earshot/     pipeline: profile, collect, tag, synthesize, report, serve (API for n8n)
-  sources/   hackernews, appstore, reddit, csv
-prompts/     the three prompts, versioned in git
-fixtures/    the fictional demo company and its synthetic mentions
-n8n/         importable workflow
-tests/       21 tests, run in mock mode on every push
-```
+Want more than public comments? Add your own export (G2 reviews, support tickets, NPS answers) with `--csv my_reviews.csv`.
 
 ---
 
-<sub>MIT licensed · built by [Isha Chaudhari](https://github.com/ishacm) · part of a small set of open GTM tools, alongside [Kompass](https://github.com/ishacm/kompass) and [crm-tidy](https://github.com/ishacm/crm-tidy)</sub>
+<details>
+<summary><b>How it works, step by step</b></summary>
+
+| Step | What happens |
+|---|---|
+| **1. Read the website** | Finds the company, category, the claims it makes and likely competitors (you can override them) |
+| **2. Collect** | Hacker News and App Store reviews (free, public APIs), Reddit (with your own key), and your CSV files. Usernames, emails and phone numbers are removed |
+| **3. Tag** | Each mention gets tagged as a pain, job, objection, praise, reason to switch or feature request, with an exact quote. Paraphrased quotes are rejected and counted |
+| **4. Count, then write** | Themes are counted in code, so the numbers are reproducible. The AI writes messaging from numbered evidence only, and anything uncited is dropped |
+| **5. Report** | A shareable web page, a Markdown file, and an optional Slack summary |
+
+</details>
+
+<details>
+<summary><b>Run it every week with n8n</b></summary>
+
+Start the small local API, then import [`n8n/earshot.workflow.json`](n8n/earshot.workflow.json) into a self-hosted n8n (free Community Edition):
+
+```bash
+uvicorn earshot.serve:app --port 8090                                    # n8n on the same machine
+EARSHOT_API_TOKEN=pick-a-long-random-string \
+  uvicorn earshot.serve:app --host 0.0.0.0 --port 8090                   # n8n in Docker: always set a token
+```
+
+The workflow runs Earshot on demand (via a webhook) or every Monday, and posts a summary to Slack. Paste your token and your Slack webhook URL into the nodes.
+
+</details>
+
+<details>
+<summary><b>What it costs (nothing) and what keeps it honest</b></summary>
+
+| Piece | Free option |
+|---|---|
+| AI | Groq free tier. Paid models are blocked unless you set `EARSHOT_ALLOW_PAID=true` |
+| Sources | Hacker News, App Store and Reddit official APIs, plus your own CSV files. No scraping of sites that forbid it |
+| Automation | n8n Community Edition, self-hosted |
+
+- **Quotes are exact or they're gone.** The report shows how many were rejected.
+- **Counts are honest.** They are mentions in this sample, not market share, and themes with fewer than 3 mentions are marked weak.
+- **No secrets in the code.** Keys live in `.env`, which is never committed, and CI fails if anything key-shaped slips in.
+- **Before you quote a number:** check 30 tagged mentions by hand, and keep the report's date and sources with any figure you share.
+
+</details>
+
+<details>
+<summary><b>What's in the repo</b></summary>
+
+```
+earshot/     the pipeline: profile, collect, tag, synthesize, report, serve (API for n8n)
+  sources/   hackernews, appstore, reddit, csv
+prompts/     the three prompts
+fixtures/    the fictional demo company
+n8n/         the importable workflow
+docs/        the live page, the demo report and the animation (python docs/make_gifs.py)
+tests/       21 tests, run on every push without keys or network
+```
+
+</details>
+
+---
+
+<sub>MIT licensed · built by [Isha Chaudhari](https://www.linkedin.com/in/ishachaudhari/) · one of three small open GTM tools: [Kompass](https://github.com/ishacm/kompass), [Earshot](https://ishacm.github.io/earshot/) and [crm-tidy](https://ishacm.github.io/crm-tidy/)</sub>
